@@ -8,7 +8,11 @@
    - productId: unique id for the product (number)
    - image: picture of product (url string)
 */
-
+products = [
+{ name: "cherry", price: 4.99, quantity: 0, productId: 1000, image: "cherry.jpg" },
+{ name: "orange", price: 6.99, quantity: 0, productId: 1001, image: "orange.jpg" },
+{ name: "strawberry", price: 3.99, quantity: 0, productId: 1002, image: "strawberry.jpg" }
+];
 /* Images provided in /images folder. All images from Unsplash.com
    - cherry.jpg by Mae Mu
    - orange.jpg by Mae Mu
