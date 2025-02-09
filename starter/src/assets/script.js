@@ -13,6 +13,7 @@ products = [
 { name: "orange", price: 6.99, quantity: 0, productId: 1001, image: "orange.jpg" },
 { name: "strawberry", price: 3.99, quantity: 0, productId: 1002, image: "strawberry.jpg" }
 ];
+
 /* Images provided in /images folder. All images from Unsplash.com
    - cherry.jpg by Mae Mu
    - orange.jpg by Mae Mu
@@ -29,20 +30,33 @@ let cart = [];
 */
 
 function addProductToCart(productId) {
-  switch(productId){
-    case 1000:
-      cart.push(products[0])
-      cart[cart.length - 1].quantity = cart[cart.length - 1].quantity + 1
-      break
-    case 1001:
-      cart.push(products[1])
-      cart[cart.length - 1].quantity = cart[cart.length - 1].quantity + 1
-      break
-    case 1002:
-      cart.push(products[2])
-      cart[cart.length - 1].quantity = cart[cart.length - 1].quantity + 1
+  let found = false;
+
+  //finds the product object from the products array based on productId
+  const product = products.find(p => p.productId === productId);
+
+  //if the productId in the function does not exist it returns the productId that wasn't found
+  if(!product){
+    console.log("ProductId " + productId + " not found.");
+    return;
   }
+
+  //Checks cart array to see if product is already in it, if so it adds 1 to the quantity of that product in the cart
+  for (let i = 0; i < cart.length; i++){
+    if (cart[i].productId === productId) {
+      cart[i].quantity += 1;
+      found = true;
+      break;
+      }
+  } 
+
+  //If the product is not already in the cart, this code adds the product to the cart with an initial quantity of 1
+  if(!found){
+    const newProduct = { ...product, quantity: 1 }; //spread operator to copy rest of properties from product object
+    cart.push(newProduct);
+  } 
 }
+
 /* Create a function named increaseQuantity that takes in the productId as an argument
   - increaseQuantity should get the correct product based on the productId
   - increaseQuantity should then increase the product's quantity
