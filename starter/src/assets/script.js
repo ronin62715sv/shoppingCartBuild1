@@ -28,6 +28,21 @@ let cart = [];
   - if the product is not already in the cart, add it to the cart
 */
 
+function addProductToCart(productId) {
+  switch(productId){
+    case 1000:
+      cart.push(products[0])
+      cart[cart.length - 1].quantity = cart[cart.length - 1].quantity + 1
+      break
+    case 1001:
+      cart.push(products[1])
+      cart[cart.length - 1].quantity = cart[cart.length - 1].quantity + 1
+      break
+    case 1002:
+      cart.push(products[2])
+      cart[cart.length - 1].quantity = cart[cart.length - 1].quantity + 1
+  }
+}
 /* Create a function named increaseQuantity that takes in the productId as an argument
   - increaseQuantity should get the correct product based on the productId
   - increaseQuantity should then increase the product's quantity
