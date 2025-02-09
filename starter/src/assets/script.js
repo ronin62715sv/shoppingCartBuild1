@@ -29,7 +29,7 @@ let cart = [];
   - if the product is not already in the cart, add it to the cart
 */
 
-function addProductToCart(productId) {
+function addProductToCart(productId){
   let found = false;
 
   //finds the product object from the products array based on productId
@@ -37,7 +37,7 @@ function addProductToCart(productId) {
 
   //if the productId in the function does not exist it returns the productId that wasn't found
   if(!product){
-    console.log("ProductId " + productId + " not found.");
+    console.log("Product with product ID " + productId + " not found.");
     return;
   }
 
@@ -47,7 +47,7 @@ function addProductToCart(productId) {
       cart[i].quantity += 1;
       found = true;
       break;
-      }
+    }
   } 
 
   //If the product is not already in the cart, this code adds the product to the cart with an initial quantity of 1
@@ -62,6 +62,20 @@ function addProductToCart(productId) {
   - increaseQuantity should then increase the product's quantity
 */
 
+function increaseQuantity(productId) {
+  let found = false
+  for (let i = 0; i < cart.length; i++) {
+    if (cart[i].productId === productId) {
+      cart[i].quantity += 1;
+      found = true
+      return "Product quantity increased";
+    } 
+  } 
+
+  if(!found) {
+    return "Product with product ID " + productId + " not found.";
+  }
+}
 /* Create a function named decreaseQuantity that takes in the productId as an argument
   - decreaseQuantity should get the correct product based on the productId
   - decreaseQuantity should decrease the quantity of the product
