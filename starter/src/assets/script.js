@@ -85,10 +85,10 @@ function decreaseQuantity(productId) {
   let found = false
   for (let i = 0; i < cart.length; i++) {
     if (cart[i].productId === productId) {
-      found = true;
-      cart[i].quantity -= 1
+      found = true; //set found to true
+      cart[i].quantity -= 1 //decreases the quantity
       if (cart[i].quantity <= 0) {
-        cart.splice(i, 1);
+        cart.splice(i, 1); //removes product from cart if quantity <= 0
         return "Product removed from cart.";
       }
       return "Product quantity decreased.";
@@ -103,6 +103,19 @@ function decreaseQuantity(productId) {
   - removeProductFromCart should remove the product from the cart
 */
 
+function removeProductFromCart(productId) {
+  let found = false
+  for (let i = 0; i < cart.length; i++) {
+    if (cart[i].productId === productId) {
+      found = true; //set found to true
+      cart[i].quantity = 0; //set quantity to zero
+      cart.splice(i,1); //remove product from cart
+      return "Product removed from cart."
+    }
+  }
+  //if product was not found in cart
+  return "Product with product ID " + productId + " not found.";
+}
 /* Create a function named cartTotal that has no parameters
   - cartTotal should iterate through the cart to get the total cost of all products
   - cartTotal should return the total cost of the products in the cart
