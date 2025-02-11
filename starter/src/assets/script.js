@@ -67,7 +67,7 @@ function increaseQuantity(productId) {
   for (let i = 0; i < cart.length; i++) {
     if (cart[i].productId === productId) {
       cart[i].quantity += 1;
-      found = true
+      found = true;
       return "Product quantity increased";
     } 
   } 
@@ -81,7 +81,22 @@ function increaseQuantity(productId) {
   - decreaseQuantity should decrease the quantity of the product
   - if the function decreases the quantity to 0, the product is removed from the cart
 */
-
+function decreaseQuantity(productId) {
+  let found = false
+  for (let i = 0; i < cart.length; i++) {
+    if (cart[i].productId === productId) {
+      found = true;
+      cart[i].quantity -= 1
+      if (cart[i].quantity <= 0) {
+        cart.splice(i, 1);
+        return "Product removed from cart.";
+      }
+      return "Product quantity decreased.";
+    } 
+  }
+  //if product was not found in cart
+  return "Product with product ID " + productId + " not found.";
+}
 /* Create a function named removeProductFromCart that takes in the productId as an argument
   - removeProductFromCart should get the correct product based on the productId
   - removeProductFromCart should update the product quantity to 0
