@@ -8,7 +8,7 @@
    - productId: unique id for the product (number)
    - image: picture of product (url string)
 */
-products = [
+const products = [
 { name: "cherry", price: 4.99, quantity: 0, productId: 1000, image: 'images/cherry.jpg' },
 { name: "orange", price: 6.99, quantity: 0, productId: 1001, image: 'images/orange.jpg' },
 { name: "strawberry", price: 3.99, quantity: 0, productId: 1002, image: 'images/strawberry.jpg' }
@@ -21,7 +21,7 @@ products = [
 */
 
 /* Declare an empty array named cart to hold the items in the cart */
-let cart = [];
+const cart = [];
 
 /* Create a function named addProductToCart that takes in the product productId as an argument
   - addProductToCart should get the correct product based on the productId
@@ -147,9 +147,9 @@ module.exports = {
    increaseQuantity,
    decreaseQuantity,
    removeProductFromCart,
-   cartTotal,
-   pay, 
-   emptyCart,
+   //cartTotal,
+   //pay, 
+   //emptyCart,
    /* Uncomment the following line if completing the currency converter bonus */
    // currency
 }
