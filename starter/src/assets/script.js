@@ -163,8 +163,16 @@ function cartTotal() {
   return cartSum
 }
 
-
 /* Create a function called emptyCart that empties the products from the cart */
+
+function emptyCart(){
+  if(cart.length === 0){
+    console.log("Cart is already empty.");
+  } else {
+    cart.length = 0;
+    console.log("Cart has been emptied.");
+  }
+}
 
 /* Create a function named pay that takes in an amount as an argument
   - amount is the money paid by customer
@@ -189,9 +197,9 @@ module.exports = {
    increaseQuantity,
    decreaseQuantity,
    removeProductFromCart,
-   cartTotal
+   cartTotal,
+   emptyCart
    //pay, 
-   //emptyCart,
    /* Uncomment the following line if completing the currency converter bonus */
    // currency
 };
