@@ -9,11 +9,33 @@
    - image: picture of product (url string)
 */
 const products = [
-{ name: "cherry", price: 4.99, quantity: 0, productId: 1000, image: 'images/cherry.jpg' },
-{ name: "orange", price: 6.99, quantity: 0, productId: 1001, image: 'images/orange.jpg' },
-{ name: "strawberry", price: 3.99, quantity: 0, productId: 1002, image: 'images/strawberry.jpg' }
+  { 
+    name: "cherry", 
+    price: 4.99, 
+    quantity: 0, 
+    productId: 1000, 
+    image: 'images/cherry.jpg' 
+  },
+  { 
+    name: "orange", 
+    price: 6.99, 
+    quantity: 0, 
+    productId: 1001, 
+    image: 'images/orange.jpg' 
+  },
+  { 
+    name: "strawberry", 
+    price: 3.99, 
+    quantity: 0, 
+    productId: 1002, 
+    image: 'images/strawberry.jpg' 
+  }
 ];
 
+// Helper function to find product based on property from array
+function findProduct(array, property, value){
+  return array.find(p => p[property] === value);
+}
 /* Images provided in /images folder. All images from Unsplash.com
    - cherry.jpg by Mae Mu
    - orange.jpg by Mae Mu
@@ -22,7 +44,6 @@ const products = [
 
 /* Declare an empty array named cart to hold the items in the cart */
 const cart = [];
-
 /* Create a function named addProductToCart that takes in the product productId as an argument
   - addProductToCart should get the correct product based on the productId
   - addProductToCart should then increase the product's quantity
@@ -30,31 +51,28 @@ const cart = [];
 */
 
 function addProductToCart(productId){
-  let found = false;
 
   //finds the product object from the products array based on productId
-  const product = products.find(p => p.productId === productId);
-
+  const cartFind = findProduct(cart, 'productId', productId);
+  const cartProduct = findProduct(products, 'productId', productId);
   //if the productId in the function does not exist it returns the productId that wasn't found
-  if(!product){
-    console.log("Product with product ID " + productId + " not found.");
-    return;
-  }
-
-  //Checks cart array to see if product is already in it, if so it adds 1 to the quantity of that product in the cart
-  for (let i = 0; i < cart.length; i++){
-    if (cart[i].productId === productId) {
-      cart[i].quantity += 1;
-      found = true;
-      break;
+  if(cartFind){
+    cartFind.quantity += 1;
+    cartProduct.quantity += 1;
+    console.log("product quantity increased");
+  } else {
+    
+    const productAdd = findProduct(products, 'productId', productId)
+    if (productAdd) {
+      productAdd.quantity += 1;
+      //productAdd.quantity;
+      //cart.products.push(productAdd);
+      cart.push({...productAdd, quantity: 1});
+      console.log("Product added to cart")
+    } else {
+    console.log("Product not found or does not exist")
     }
-  } 
-
-  //If the product is not already in the cart, this code adds the product to the cart with an initial quantity of 1
-  if(!found){
-    const newProduct = { ...product, quantity: 1 }; //spread operator to copy rest of properties from product object
-    cart.push(newProduct);
-  } 
+  }
 }
 
 /* Create a function named increaseQuantity that takes in the productId as an argument
@@ -146,10 +164,10 @@ module.exports = {
    addProductToCart,
    increaseQuantity,
    decreaseQuantity,
-   removeProductFromCart,
+   removeProductFromCart
    //cartTotal,
    //pay, 
    //emptyCart,
    /* Uncomment the following line if completing the currency converter bonus */
    // currency
-}
+};
