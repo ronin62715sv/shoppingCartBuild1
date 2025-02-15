@@ -90,6 +90,7 @@ function increaseQuantity(productId) {
   let cartProduct = findProduct(products, 'productId', productId);
   if(cartFind){ //increase quantity by 1 if products is found in cart
     cartProduct.quantity += 1; //increases quanity of found product in products array
+    cartFind.quantity += 1;
     console.log("Product quantity increased");
   } 
 
@@ -106,12 +107,14 @@ function increaseQuantity(productId) {
 
 function decreaseQuantity(productId) {
 
+  let cartFind = findProduct(cart, 'productId', productId);
   let cartProduct = findProduct(products, 'productId', productId);
   let found = false;
   for (let i = 0; i < cart.length; i++) {
     if (cart[i].productId === productId) {
       found = true; //set found to true
       cartProduct.quantity -= 1; //decreases the quantity
+      cartFind.quantity -= 1;
       if (cartProduct.quantity <= 0) {
         cart.splice(i, 1); //removes product from cart if quantity <= 0
         return "Product removed from cart.";
@@ -143,11 +146,23 @@ function removeProductFromCart(productId) {
   //if product was not found in cart
   return "Product with product ID " + productId + " not found.";
 }
+
 /* Create a function named cartTotal that has no parameters
   - cartTotal should iterate through the cart to get the total cost of all products
   - cartTotal should return the total cost of the products in the cart
   Hint: price and quantity can be used to determine total cost
 */
+
+function cartTotal() {
+  let cartSum = 0;
+
+  for(let i = 0; i < cart.length; i++){
+    let itemTotal = cart[i].quantity * cart[i].price;
+    cartSum += itemTotal;
+  }
+  return cartSum
+}
+
 
 /* Create a function called emptyCart that empties the products from the cart */
 
@@ -173,8 +188,8 @@ module.exports = {
    addProductToCart,
    increaseQuantity,
    decreaseQuantity,
-   removeProductFromCart
-   //cartTotal,
+   removeProductFromCart,
+   cartTotal
    //pay, 
    //emptyCart,
    /* Uncomment the following line if completing the currency converter bonus */
