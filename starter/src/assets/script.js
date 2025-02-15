@@ -8,6 +8,12 @@
    - productId: unique id for the product (number)
    - image: picture of product (url string)
 */
+
+/* Images provided in /images folder. All images from Unsplash.com
+   - cherry.jpg by Mae Mu
+   - orange.jpg by Mae Mu
+   - strawberry.jpg by Allec Gomes
+*/
 const products = [
   { 
     name: "cherry", 
@@ -32,18 +38,14 @@ const products = [
   }
 ];
 
-// Helper function to find product based on property from array
+// Helper function to find product based on property from any defined array
 function findProduct(array, property, value){
   return array.find(p => p[property] === value);
 }
-/* Images provided in /images folder. All images from Unsplash.com
-   - cherry.jpg by Mae Mu
-   - orange.jpg by Mae Mu
-   - strawberry.jpg by Allec Gomes
-*/
 
 /* Declare an empty array named cart to hold the items in the cart */
 const cart = [];
+
 /* Create a function named addProductToCart that takes in the product productId as an argument
   - addProductToCart should get the correct product based on the productId
   - addProductToCart should then increase the product's quantity
@@ -52,25 +54,27 @@ const cart = [];
 
 function addProductToCart(productId){
 
-  //finds the product object from the products array based on productId
-  const cartFind = findProduct(cart, 'productId', productId);
-  const cartProduct = findProduct(products, 'productId', productId);
-  //if the productId in the function does not exist it returns the productId that wasn't found
+  //finds the product object from the products and carts array based on productId
+  let cartFind = findProduct(cart, 'productId', productId);
+  let cartProduct = findProduct(products, 'productId', productId);
+
+  //if product was found in the cart the quantity of that product is increased by 1
   if(cartFind){
     cartFind.quantity += 1;
     cartProduct.quantity += 1;
     console.log("product quantity increased");
   } else {
     
+    /*if the product was not found the product 
+    is searched in the product array and is added 
+    to the cart with quantity of 1*/
     const productAdd = findProduct(products, 'productId', productId)
     if (productAdd) {
       productAdd.quantity += 1;
-      //productAdd.quantity;
-      //cart.products.push(productAdd);
-      cart.push({...productAdd, quantity: 1});
+      cart.push({...productAdd, quantity: 1}); //...spread includes everything in object, with quantity set to 1
       console.log("Product added to cart")
     } else {
-    console.log("Product not found or does not exist")
+    console.log("Product Id: " + productId + " not found or does not exist.");
     }
   }
 }
@@ -81,31 +85,34 @@ function addProductToCart(productId){
 */
 
 function increaseQuantity(productId) {
-  let found = false
-  for (let i = 0; i < cart.length; i++) {
-    if (cart[i].productId === productId) {
-      cart[i].quantity += 1;
-      found = true;
-      return "Product quantity increased";
-    } 
+  //finds products in cart and products array
+  let cartFind = findProduct(cart, 'productId', productId);
+  let cartProduct = findProduct(products, 'productId', productId);
+  if(cartFind){ //increase quantity by 1 if products is found in cart
+    cartProduct.quantity += 1; //increases quanity of found product in products array
+    console.log("Product quantity increased");
   } 
 
-  if(!found) {
-    return "Product with product ID " + productId + " not found.";
+  if(!cartFind) { //if product was not found in cart, logs a message 
+    return "Product with product ID " + productId + " not in cart.";
   }
 }
+
 /* Create a function named decreaseQuantity that takes in the productId as an argument
   - decreaseQuantity should get the correct product based on the productId
   - decreaseQuantity should decrease the quantity of the product
   - if the function decreases the quantity to 0, the product is removed from the cart
 */
+
 function decreaseQuantity(productId) {
-  let found = false
+
+  let cartProduct = findProduct(products, 'productId', productId);
+  let found = false;
   for (let i = 0; i < cart.length; i++) {
     if (cart[i].productId === productId) {
       found = true; //set found to true
-      cart[i].quantity -= 1 //decreases the quantity
-      if (cart[i].quantity <= 0) {
+      cartProduct.quantity -= 1; //decreases the quantity
+      if (cartProduct.quantity <= 0) {
         cart.splice(i, 1); //removes product from cart if quantity <= 0
         return "Product removed from cart.";
       }
@@ -122,11 +129,13 @@ function decreaseQuantity(productId) {
 */
 
 function removeProductFromCart(productId) {
+
+  let cartProduct = findProduct(products, 'productId', productId);
   let found = false
   for (let i = 0; i < cart.length; i++) {
     if (cart[i].productId === productId) {
       found = true; //set found to true
-      cart[i].quantity = 0; //set quantity to zero
+      cartProduct.quantity = 0; //set quantity to zero
       cart.splice(i,1); //remove product from cart
       return "Product removed from cart."
     }
