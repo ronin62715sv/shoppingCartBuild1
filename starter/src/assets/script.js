@@ -75,7 +75,7 @@ function addProductToCart(productId){
   - increaseQuantity should then increase the product's quantity
 */
 
-function increaseQuantity(productId) {
+function increaseQuantity(productId){
   //finds products in cart and products array
   let cartFind = findProduct(cart, 'productId', productId);
   let cartProduct = findProduct(products, 'productId', productId);
@@ -97,7 +97,7 @@ function increaseQuantity(productId) {
   - if the function decreases the quantity to 0, the product is removed from the cart
 */
 
-function decreaseQuantity(productId) {
+function decreaseQuantity(productId){
   //finds products in cart and products array
   let cartFind = findProduct(cart, 'productId', productId);
   let cartProduct = findProduct(products, 'productId', productId);
@@ -109,7 +109,7 @@ function decreaseQuantity(productId) {
   cartProduct.quantity -= 1; //decreases the quantity in product array since the unit tests track quantity in products array
   cartFind.quantity -= 1; //descreases the quanitity in cart array
   
-  if(cartProduct.quantity <= 0) {
+  if(cartProduct.quantity <= 0){
     const index = cart.indexOf(cartFind); //const set to array index of the product found in cart
     cart.splice(index, 1); //removes product from cart if quantity <= 0
     return "Product removed from cart."; //returns message when product is removed from cart
@@ -123,7 +123,7 @@ function decreaseQuantity(productId) {
   - removeProductFromCart should remove the product from the cart
 */
 
-function removeProductFromCart(productId) {
+function removeProductFromCart(productId){
   //find products in cart and products arrays
   let cartFind = findProduct(cart, 'productId', productId);
   let cartProduct = findProduct(products, 'productId', productId);
@@ -145,7 +145,7 @@ function removeProductFromCart(productId) {
   Hint: price and quantity can be used to determine total cost
 */
 
-function cartTotal() {
+function cartTotal(){
   let cartSum = 0; //initialize a variable for sum of cart price
 
   for(let i = 0; i < cart.length; i++){ //iterates through the cart
