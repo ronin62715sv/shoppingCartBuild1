@@ -181,6 +181,19 @@ function emptyCart(){
   Hint: cartTotal function gives us cost of all the products in the cart  
 */
 
+function pay(amount){
+  const total = cartTotal(); //set const total to amount from cartTotal function
+
+  if(amount === total){
+    result = 0; //no change, 0 additional payment needed
+  } else if(amount < total){
+    result = amount - total; //return the amount still due
+  } else {
+    result = amount - total; //return the change
+  }
+  return parseFloat(result.toFixed(2));
+}
+
 /* Place stand out suggestions here (stand out suggestions can be found at the bottom of the project rubric.)*/
 
 
@@ -198,8 +211,8 @@ module.exports = {
    decreaseQuantity,
    removeProductFromCart,
    cartTotal,
-   emptyCart
-   //pay, 
+   emptyCart,
+   pay
    /* Uncomment the following line if completing the currency converter bonus */
    // currency
 };
