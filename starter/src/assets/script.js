@@ -63,19 +63,10 @@ function addProductToCart(productId){
     cartFind.quantity += 1;
     cartProduct.quantity += 1;
     console.log("product quantity increased");
-  } else {
-    
-    /*if the product was not found the product 
-    is searched in the product array and is added 
-    to the cart with quantity of 1*/
-    const productAdd = findProduct(products, 'productId', productId)
-    if (productAdd) {
-      productAdd.quantity += 1;
-      cart.push({...productAdd, quantity: 1}); //...spread includes everything in object, with quantity set to 1
-      console.log("Product added to cart")
-    } else {
-    console.log("Product Id: " + productId + " not found or does not exist.");
-    }
+  } else { //*if the product was not found the product is searched in the product array and is added to the cart with quantity of 1.
+    cartProduct.quantity += 1;
+    cart.push({...cartProduct, quantity: 1}); //...spread includes everything in object, with quantity set to 1
+    console.log("Product added to cart");
   }
 }
 
@@ -160,7 +151,7 @@ function cartTotal() {
     let itemTotal = cart[i].quantity * cart[i].price;
     cartSum += itemTotal;
   }
-  return cartSum
+  return parseFloat(cartSum.toFixed(2));
 }
 
 /* Create a function called emptyCart that empties the products from the cart */
