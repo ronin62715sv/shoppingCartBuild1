@@ -124,18 +124,18 @@ function decreaseQuantity(productId) {
 
 function removeProductFromCart(productId) {
 
+  let cartFind = findProduct(cart, 'productId', productId);
   let cartProduct = findProduct(products, 'productId', productId);
-  let found = false
-  for (let i = 0; i < cart.length; i++) {
-    if (cart[i].productId === productId) {
-      found = true; //set found to true
-      cartProduct.quantity = 0; //set quantity to zero
-      cart.splice(i,1); //remove product from cart
-      return "Product removed from cart."
-    }
+  
+  if(!cartFind){
+    return "Product with product ID " + productId + " not found.";
+  } else {
+    cartProduct.quantity = 0//set found to true
+    cartFind.quantity = 0; //set quantity to zero
+    const index = cart.indexOf(cartFind);
+    cart.splice(index,1); //remove product from cart
+    return "Product removed from cart."
   }
-  //if product was not found in cart
-  return "Product with product ID " + productId + " not found.";
 }
 
 /* Create a function named cartTotal that has no parameters
