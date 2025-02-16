@@ -38,7 +38,7 @@ const products = [
   }
 ];
 
-// Helper function to find product based on property from any defined array
+// Helper function to find product based on any defined property from any defined array
 function findProduct(array, property, value){
   return array.find(p => p[property] === value);
 }
@@ -54,19 +54,19 @@ const cart = [];
 
 function addProductToCart(productId){
 
-  //finds the product object from the products and carts array based on productId
+  //finds the product object from the products and carts arrays based on productId
   let cartFind = findProduct(cart, 'productId', productId);
   let cartProduct = findProduct(products, 'productId', productId);
 
   //if product was found in the cart the quantity of that product is increased by 1
   if(cartFind){
-    cartFind.quantity += 1;
-    cartProduct.quantity += 1;
-    return "product quantity increased";
-  } else { //*if the product was not found the product is searched in the product array and is added to the cart with quantity of 1.
-    cartProduct.quantity += 1;
+    cartFind.quantity += 1; //quantity increase in cart array
+    cartProduct.quantity += 1; //quanitity increase in products array due to unit test checking quantity in products array 
+    return "product quantity increased"; //return a message when product quantity is increased
+  } else { // if the product was not found the product is searched in the products array and is added to the cart with quantity of 1.
+    cartProduct.quantity += 1; //quantity updated in products array
     cart.push({...cartProduct, quantity: 1}); //...spread includes everything in object, with quantity set to 1
-    return "Product added to cart";
+    return "Product added to cart"; //return a message when product is added to cart
   }
 }
 
@@ -79,13 +79,14 @@ function increaseQuantity(productId) {
   //finds products in cart and products array
   let cartFind = findProduct(cart, 'productId', productId);
   let cartProduct = findProduct(products, 'productId', productId);
-  if(cartFind){ //increase quantity by 1 if products is found in cart
-    cartProduct.quantity += 1; //increases quanity of found product in products array
-    cartFind.quantity += 1;
-    return "Product quantity increased";
+
+  if(cartFind){ //increase quantity by 1 if product is found in cart
+    cartProduct.quantity += 1; //increases quantity of found product in products array
+    cartFind.quantity += 1; //increases quantity in cart array
+    return "Product quantity increased"; //return message when product quantity is increased
   } 
 
-  if(!cartFind) { //if product was not found in cart, logs a message 
+  if(!cartFind) { //if product was not found in cart, logs a message with the productId that was not found
     return "Product with product ID " + productId + " not in cart.";
   }
 }
@@ -97,11 +98,11 @@ function increaseQuantity(productId) {
 */
 
 function decreaseQuantity(productId) {
-
+  //finds products in cart and products array
   let cartFind = findProduct(cart, 'productId', productId);
   let cartProduct = findProduct(products, 'productId', productId);
   
-  if(!cartFind){
+  if(!cartFind){ //if product not found in cart, returns a message
     return "Product with product ID " + productId + " not found.";
   }
      
@@ -109,12 +110,12 @@ function decreaseQuantity(productId) {
   cartFind.quantity -= 1; //descreases the quanitity in cart array
   
   if(cartProduct.quantity <= 0) {
-    const index = cart.indexOf(cartFind);
+    const index = cart.indexOf(cartFind); //const set to array index of the product found in cart
     cart.splice(index, 1); //removes product from cart if quantity <= 0
-    return "Product removed from cart.";
+    return "Product removed from cart."; //returns message when product is removed from cart
   }
 
-  return "Product quantity decreased.";
+  return "Product quantity decreased."; //returns message if the product quantity was decreased and still in cart
 } 
 /* Create a function named removeProductFromCart that takes in the productId as an argument
   - removeProductFromCart should get the correct product based on the productId
@@ -123,18 +124,18 @@ function decreaseQuantity(productId) {
 */
 
 function removeProductFromCart(productId) {
-
+  //find products in cart and products arrays
   let cartFind = findProduct(cart, 'productId', productId);
   let cartProduct = findProduct(products, 'productId', productId);
   
-  if(!cartFind){
+  if(!cartFind){ //if product was not found in cart, returns a message
     return "Product with product ID " + productId + " not found.";
-  } else {
-    cartProduct.quantity = 0//set found to true
-    cartFind.quantity = 0; //set quantity to zero
-    const index = cart.indexOf(cartFind);
+  } else { //if product was found in cart
+    cartProduct.quantity = 0//sets quantity of product to zero in products array
+    cartFind.quantity = 0; //sets quantity of product to zero in cart array
+    const index = cart.indexOf(cartFind); //const set to array index of the product found in cart
     cart.splice(index,1); //remove product from cart
-    return "Product removed from cart."
+    return "Product removed from cart." //return message when product is removed from cart
   }
 }
 
@@ -145,23 +146,23 @@ function removeProductFromCart(productId) {
 */
 
 function cartTotal() {
-  let cartSum = 0;
+  let cartSum = 0; //initialize a variable for sum of cart price
 
-  for(let i = 0; i < cart.length; i++){
-    let itemTotal = cart[i].quantity * cart[i].price;
-    cartSum += itemTotal;
+  for(let i = 0; i < cart.length; i++){ //iterates through the cart
+    let itemTotal = cart[i].quantity * cart[i].price; //multiplies product price by product quantity
+    cartSum += itemTotal; //result of item total is added to cartSum
   }
-  return parseFloat(cartSum.toFixed(2));
+  return parseFloat(cartSum.toFixed(2)); //return total cost of cart to two decimal places fixed
 }
 
 /* Create a function called emptyCart that empties the products from the cart */
 
 function emptyCart(){
-  if(cart.length === 0){
-    return "Cart is already empty.";
+  if(cart.length === 0){ //check to see if cart array is already empty
+    return "Cart is already empty."; //if empty, returns a message
   } else {
-    cart.length = 0;
-    return "Cart has been emptied.";
+    cart.length = 0; //if the cart is not already empty, the cart is emptied
+    return "Cart has been emptied."; //returns a message when cart is emptied
   }
 }
 
@@ -171,7 +172,7 @@ function emptyCart(){
   - pay will return a positive number if money should be returned to customer
   Hint: cartTotal function gives us cost of all the products in the cart  
 */
-let remainingBalance = cartTotal();
+let remainingBalance = cartTotal(); //global remainingBalance variable requested per the rubric
 
 function pay(amount){
   const total = cartTotal(); //set const total to amount from cartTotal function
@@ -183,7 +184,7 @@ function pay(amount){
   } else {
     remainingBalance = amount - total; //return the change
   }
-  return parseFloat(remainingBalance.toFixed(2));
+  return parseFloat(remainingBalance.toFixed(2)); //return remaining balance fixed to 2 decimal places
 }
 
 /* Place stand out suggestions here (stand out suggestions can be found at the bottom of the project rubric.)*/
