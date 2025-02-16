@@ -62,11 +62,11 @@ function addProductToCart(productId){
   if(cartFind){
     cartFind.quantity += 1;
     cartProduct.quantity += 1;
-    console.log("product quantity increased");
+    return "product quantity increased";
   } else { //*if the product was not found the product is searched in the product array and is added to the cart with quantity of 1.
     cartProduct.quantity += 1;
     cart.push({...cartProduct, quantity: 1}); //...spread includes everything in object, with quantity set to 1
-    console.log("Product added to cart");
+    return "Product added to cart";
   }
 }
 
@@ -82,7 +82,7 @@ function increaseQuantity(productId) {
   if(cartFind){ //increase quantity by 1 if products is found in cart
     cartProduct.quantity += 1; //increases quanity of found product in products array
     cartFind.quantity += 1;
-    console.log("Product quantity increased");
+    return "Product quantity increased";
   } 
 
   if(!cartFind) { //if product was not found in cart, logs a message 
@@ -112,10 +112,10 @@ function decreaseQuantity(productId) {
     const index = cart.indexOf(cartFind);
     cart.splice(index, 1); //removes product from cart if quantity <= 0
     return "Product removed from cart.";
-    }
-  
-    return "Product quantity decreased.";
-  } 
+  }
+
+  return "Product quantity decreased.";
+} 
 /* Create a function named removeProductFromCart that takes in the productId as an argument
   - removeProductFromCart should get the correct product based on the productId
   - removeProductFromCart should update the product quantity to 0
@@ -158,10 +158,10 @@ function cartTotal() {
 
 function emptyCart(){
   if(cart.length === 0){
-    console.log("Cart is already empty.");
+    return "Cart is already empty.";
   } else {
     cart.length = 0;
-    console.log("Cart has been emptied.");
+    return "Cart has been emptied.";
   }
 }
 
