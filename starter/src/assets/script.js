@@ -180,18 +180,19 @@ function emptyCart(){
   - pay will return a positive number if money should be returned to customer
   Hint: cartTotal function gives us cost of all the products in the cart  
 */
+let remainingBalance = cartTotal();
 
 function pay(amount){
   const total = cartTotal(); //set const total to amount from cartTotal function
 
   if(amount === total){
-    result = 0; //no change, 0 additional payment needed
+    remainingBalance = 0; //no change, 0 additional payment needed
   } else if(amount < total){
-    result = amount - total; //return the amount still due
+    remainingBalance = amount - total; //return the amount still due
   } else {
-    result = amount - total; //return the change
+    remainingBalance = amount - total; //return the change
   }
-  return parseFloat(result.toFixed(2));
+  return parseFloat(remainingBalance.toFixed(2));
 }
 
 /* Place stand out suggestions here (stand out suggestions can be found at the bottom of the project rubric.)*/
