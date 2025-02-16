@@ -24,7 +24,7 @@ function drawCart() {
     // clear cart before drawing
     let cartItems = '';
     cart.forEach((element) => {
-        let itemTotal = element.price * element.quantity;
+        let itemTotal = parseFloat((element.price * element.quantity).toFixed(2));
 
         cartItems += `
             <div data-productId='${element.productId}'>
