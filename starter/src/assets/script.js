@@ -100,22 +100,22 @@ function decreaseQuantity(productId) {
 
   let cartFind = findProduct(cart, 'productId', productId);
   let cartProduct = findProduct(products, 'productId', productId);
-  let found = false;
-  for (let i = 0; i < cart.length; i++) {
-    if (cart[i].productId === productId) {
-      found = true; //set found to true
-      cartProduct.quantity -= 1; //decreases the quantity
-      cartFind.quantity -= 1;
-      if (cartProduct.quantity <= 0) {
-        cart.splice(i, 1); //removes product from cart if quantity <= 0
-        return "Product removed from cart.";
-      }
-      return "Product quantity decreased.";
-    } 
+  
+  if(!cartFind){
+    return "Product with product ID " + productId + " not found.";
   }
-  //if product was not found in cart
-  return "Product with product ID " + productId + " not found.";
-}
+     
+  cartProduct.quantity -= 1; //decreases the quantity in product array since the unit tests track quantity in products array
+  cartFind.quantity -= 1; //descreases the quanitity in cart array
+  
+  if(cartProduct.quantity <= 0) {
+    const index = cart.indexOf(cartFind);
+    cart.splice(index, 1); //removes product from cart if quantity <= 0
+    return "Product removed from cart.";
+    }
+  
+    return "Product quantity decreased.";
+  } 
 /* Create a function named removeProductFromCart that takes in the productId as an argument
   - removeProductFromCart should get the correct product based on the productId
   - removeProductFromCart should update the product quantity to 0
