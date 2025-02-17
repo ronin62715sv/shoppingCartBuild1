@@ -14,6 +14,7 @@
    - orange.jpg by Mae Mu
    - strawberry.jpg by Allec Gomes
 */
+
 const products = [
   { 
     name: "cherry", 
@@ -38,7 +39,7 @@ const products = [
   }
 ];
 
-// Helper function to find product based on any defined property from any defined array
+// Helper function to find product based on product ID from either cart or products array
 function getProductById(productId, productList){
   return productList.find(product => product.productId === productId);
 }
@@ -53,7 +54,7 @@ const cart = [];
 */
 
 function addProductToCart(productId){
-  let product = getProductById(productId, products); //finds product from products array
+  let product = getProductById(productId, products); //finds product using helper function
   if (!cart.includes(product))cart.push(product); //checks and adds product if it is not in cart
   product.quantity++; //increases quantity if already in cart or initializes quantity to one when product is added
 }
@@ -78,6 +79,7 @@ function decreaseQuantity(productId){
   let product = getProductById(productId, cart);
   if(--product.quantity === 0) removeProductFromCart(productId); //decreases quantity by 1, if that decrease results in quantity of 0, removes product from cart.
 }
+
 /* Create a function named removeProductFromCart that takes in the productId as an argument
   - removeProductFromCart should get the correct product based on the productId
   - removeProductFromCart should update the product quantity to 0
@@ -98,9 +100,10 @@ function removeProductFromCart(productId){
 
 function cartTotal(){
   let cartSum = 0; //initialize a variable for sum of cart price
-  cart.forEach(product => cartSum += product.quantity * product.price);
-  return cartSum;
+  cart.forEach(product => cartSum += product.quantity * product.price); //calculates total cost for each product
+  return cartSum; //returns cartTotal ammount
 }
+
 /* Create a function called emptyCart that empties the products from the cart */
 
 function emptyCart(){
@@ -113,18 +116,19 @@ function emptyCart(){
   - pay will return a positive number if money should be returned to customer
   Hint: cartTotal function gives us cost of all the products in the cart  
 */
+
 let totalPaid = 0; //global variable to track total
 
 function pay(amount){
-  totalPaid += amount;
-  remainingBalance = totalPaid - cartTotal();
-
-  if(remainingBalance >= 0){
+  totalPaid += amount; //tracks total amount that was payed
+  remainingBalance = totalPaid - cartTotal(); //calculates the remaining balance
+  //checks if remaining balance was paid or if there is change due
+  if(remainingBalance >= 0){ 
     totalPaid = 0; //Reset totalPaid when cart is paid in full
     emptyCart(); //clear the cart
   }
 
-  return remainingBalance;
+  return remainingBalance; //returns remaning balance
 }
 
 /* Place stand out suggestions here (stand out suggestions can be found at the bottom of the project rubric.)*/
