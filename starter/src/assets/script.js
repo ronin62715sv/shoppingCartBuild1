@@ -113,19 +113,18 @@ function emptyCart(){
   - pay will return a positive number if money should be returned to customer
   Hint: cartTotal function gives us cost of all the products in the cart  
 */
-let remainingBalance = cartTotal(); //global remainingBalance variable requested per the rubric
+let totalPaid = 0; //global variable to track total
 
 function pay(amount){
-  const total = cartTotal(); //set const total to amount from cartTotal function
+  totalPaid += amount;
+  remainingBalance = totalPaid - cartTotal();
 
-  if(amount === total){
-    remainingBalance = 0; //no change, 0 additional payment needed
-  } else if(amount < total){
-    remainingBalance = amount - total; //return the amount still due
-  } else {
-    remainingBalance = amount - total; //return the change
+  if(remainingBalance >= 0){
+    totalPaid = 0; //Reset totalPaid when cart is paid in full
+    emptyCart(); //clear the cart
   }
-  return parseFloat(remainingBalance.toFixed(2)); //return remaining balance fixed to 2 decimal places
+
+  return remainingBalance;
 }
 
 /* Place stand out suggestions here (stand out suggestions can be found at the bottom of the project rubric.)*/
