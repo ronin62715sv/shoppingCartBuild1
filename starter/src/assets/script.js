@@ -39,8 +39,8 @@ const products = [
 ];
 
 // Helper function to find product based on any defined property from any defined array
-function findProduct(array, property, value){
-  return array.find(p => p[property] === value);
+function getProductById(productId, productList){
+  return productList.find(product => product.productId === productId);
 }
 
 /* Declare an empty array named cart to hold the items in the cart */
@@ -53,21 +53,9 @@ const cart = [];
 */
 
 function addProductToCart(productId){
-
-  //finds the product object from the products and carts arrays based on productId
-  let cartFind = findProduct(cart, 'productId', productId);
-  let cartProduct = findProduct(products, 'productId', productId);
-
-  //if product was found in the cart the quantity of that product is increased by 1
-  if(cartFind){
-    cartFind.quantity += 1; //quantity increase in cart array
-    cartProduct.quantity += 1; //quanitity increase in products array due to unit test checking quantity in products array 
-    return "product quantity increased"; //return a message when product quantity is increased
-  } else { // if the product was not found the product is searched in the products array and is added to the cart with quantity of 1.
-    cartProduct.quantity += 1; //quantity updated in products array
-    cart.push({...cartProduct, quantity: 1}); //...spread includes everything in object, with quantity set to 1
-    return "Product added to cart"; //return a message when product is added to cart
-  }
+  let product = getProductById(productId, products); //finds product from products array
+  if (!cart.includes(product))cart.push(product); //checks and adds product if it is not in cart
+  product.quantity++; //increases quantity if already in cart or initializes quantity to one when product is added
 }
 
 /* Create a function named increaseQuantity that takes in the productId as an argument
@@ -76,19 +64,8 @@ function addProductToCart(productId){
 */
 
 function increaseQuantity(productId){
-  //finds products in cart and products array
-  let cartFind = findProduct(cart, 'productId', productId);
-  let cartProduct = findProduct(products, 'productId', productId);
-
-  if(cartFind){ //increase quantity by 1 if product is found in cart
-    cartProduct.quantity += 1; //increases quantity of found product in products array
-    cartFind.quantity += 1; //increases quantity in cart array
-    return "Product quantity increased"; //return message when product quantity is increased
-  } 
-
-  if(!cartFind) { //if product was not found in cart, logs a message with the productId that was not found
-    return "Product with product ID " + productId + " not in cart.";
-  }
+  let product = getProductById(productId, cart);
+  product.quantity++ //increases quantity
 }
 
 /* Create a function named decreaseQuantity that takes in the productId as an argument
@@ -98,25 +75,9 @@ function increaseQuantity(productId){
 */
 
 function decreaseQuantity(productId){
-  //finds products in cart and products array
-  let cartFind = findProduct(cart, 'productId', productId);
-  let cartProduct = findProduct(products, 'productId', productId);
-  
-  if(!cartFind){ //if product not found in cart, returns a message
-    return "Product with product ID " + productId + " not found.";
-  }
-     
-  cartProduct.quantity -= 1; //decreases the quantity in product array since the unit tests track quantity in products array
-  cartFind.quantity -= 1; //descreases the quanitity in cart array
-  
-  if(cartProduct.quantity <= 0){
-    const index = cart.indexOf(cartFind); //const set to array index of the product found in cart
-    cart.splice(index, 1); //removes product from cart if quantity <= 0
-    return "Product removed from cart."; //returns message when product is removed from cart
-  }
-
-  return "Product quantity decreased."; //returns message if the product quantity was decreased and still in cart
-} 
+  let product = getProductById(productId, cart);
+  if(--product.quantity === 0) removeProductFromCart(productId); //decreases quantity by 1, if that decrease results in quantity of 0, removes product from cart.
+}
 /* Create a function named removeProductFromCart that takes in the productId as an argument
   - removeProductFromCart should get the correct product based on the productId
   - removeProductFromCart should update the product quantity to 0
@@ -124,19 +85,9 @@ function decreaseQuantity(productId){
 */
 
 function removeProductFromCart(productId){
-  //find products in cart and products arrays
-  let cartFind = findProduct(cart, 'productId', productId);
-  let cartProduct = findProduct(products, 'productId', productId);
-  
-  if(!cartFind){ //if product was not found in cart, returns a message
-    return "Product with product ID " + productId + " not found.";
-  } else { //if product was found in cart
-    cartProduct.quantity = 0//sets quantity of product to zero in products array
-    cartFind.quantity = 0; //sets quantity of product to zero in cart array
-    const index = cart.indexOf(cartFind); //const set to array index of the product found in cart
-    cart.splice(index,1); //remove product from cart
-    return "Product removed from cart." //return message when product is removed from cart
-  }
+  let product = getProductById(productId, cart); 
+  product.quantity = 0; //set product quantity back to zero
+  cart.splice(cart.indexOf(product), 1); //removes product from cart
 }
 
 /* Create a function named cartTotal that has no parameters
