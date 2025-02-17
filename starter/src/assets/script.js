@@ -104,12 +104,7 @@ function cartTotal(){
 /* Create a function called emptyCart that empties the products from the cart */
 
 function emptyCart(){
-  if(cart.length === 0){ //check to see if cart array is already empty
-    return "Cart is already empty."; //if empty, returns a message
-  } else {
-    cart.length = 0; //if the cart is not already empty, the cart is emptied
-    return "Cart has been emptied."; //returns a message when cart is emptied
-  }
+  cart.forEach(product => removeProductFromCart(product.productId));
 }
 
 /* Create a function named pay that takes in an amount as an argument
