@@ -98,14 +98,9 @@ function removeProductFromCart(productId){
 
 function cartTotal(){
   let cartSum = 0; //initialize a variable for sum of cart price
-
-  for(let i = 0; i < cart.length; i++){ //iterates through the cart
-    let itemTotal = cart[i].quantity * cart[i].price; //multiplies product price by product quantity
-    cartSum += itemTotal; //result of item total is added to cartSum
-  }
-  return parseFloat(cartSum.toFixed(2)); //return total cost of cart to two decimal places fixed
+  cart.forEach(product => cartSum += product.quantity * product.price);
+  return cartSum;
 }
-
 /* Create a function called emptyCart that empties the products from the cart */
 
 function emptyCart(){
